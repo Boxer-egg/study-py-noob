@@ -1,4 +1,4 @@
-# 11.10 - copy.py
+# 11.10 - copy.py  
 
 class CPU():
     pass
@@ -99,3 +99,5 @@ print(computer3, computer3.CPU, computer3.DISK)
 print(computer, computer.CPU, computer.DISK)
 
 # computer和compter3的16进制都不相同
+
+#讲的太复杂，用到的时候再学
