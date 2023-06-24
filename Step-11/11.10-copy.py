@@ -98,4 +98,4 @@ computer3 = copy.deepcopy(computer)
 print(computer3, computer3.CPU, computer3.DISK)
 print(computer, computer.CPU, computer.DISK)
 
-#值都不相同
+# computer和compter3的16进制都不相同
