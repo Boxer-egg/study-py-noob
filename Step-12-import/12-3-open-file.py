@@ -10,10 +10,13 @@ abc_path = os.path.join(script_dir, 'abc.txt')
 print(abc_path)
 
 file = open(abc_path, 'r')  # 打开并读取
+
 print('read和readlines的区别:', file.read(10))
+print('光标在哪？', file.tell())
 file.seek(0)   # 将文件指针移动到文件的开头
 print(file.readlines())  # 结果是个列表 加S就是读取所有。
 # 这个方法会读取文件中的所有行，然后将文件指针移动到文件的末尾。
+file.flush() #处理大量数据时，或者需要即时保存时，需要写到缓冲区
 file.close()
 
 
