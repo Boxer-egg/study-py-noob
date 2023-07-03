@@ -10,7 +10,7 @@ def menu():
     print('      2. 查找学生信息')
     print('      3. 删除学生信息')
     print('      4. 修改学生信息')
-    print('      5. 排序学生信息')
+    print('      5. 排序学生平均成绩')
     print('      6. 统计学生总人数')
     print('      7. 显示所有学生信息')
     print('      0. 退出')
@@ -48,7 +48,11 @@ def insert():  # 插入数据的函数
 
     save(student_list)  # 调用save函数，将学生信息列表保存到文件中
     print('学生信息录入完毕\n', student_list)
-#
+
+
+def search():
+    print('查找学生信息')
+    # print 请选择您要查找：名字、学号
 
 
 def save(lst):
@@ -76,26 +80,23 @@ def save(lst):
 '''
 
 
-def search():
-    print('查找学生信息')
-
 def delete():
     while True:  # 开始一个无限循环
         student_id = int(input('请输入要删除的学生的ID'))  # 录入学生ID，并转成int类型
         if student_id != '':  # 如果输入的学生ID不为空
             if os.path.exists(filename):  # 检查数据文件是否存在
-                with open(filename, 'r', encoding='utf-8') as file:  
-                # 以读模式打开数据文件，并将此动作命名为file
+                with open(filename, 'r', encoding='utf-8') as file:
+                    # 以读模式打开数据文件，并将此动作命名为file
                     student_old = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
-            else:   
+            else:
                 student_old = []  # 如果文件不存在，则设定student_old为一个空列表
             flag = False  # 初始化标记位，用于标记是否成功删除数据
-            if student_old:  # 如果有旧的学生数据
+            if student_old:  # 如果student_old非空，就是有旧的学生数据。
                 with open(filename, 'w', encoding='utf-8') as wf:  # 以写模式打开数据文件，准备写入新的学生数据
-                    for item in student_old:  # 遍历每一个旧的学生数据
+                    for item in student_old:  # 遍历每一个旧的学生数据 （把old的数据逐行放入item）
                         d = dict(eval(item))  # 将字符串类型的学生数据转换成字典类型
                         if int(d.get('学生编号')) != student_id:  # 如果该学生的编号与要删除的学生编号不匹配
-                            wf.write(str(d) + '\n')  # 将该学生的数据写入到新的数据文件中
+                            wf.write(str(d) + '\n')  # 则将空数据，写入到新的数据文件中
                         else:  # 如果该学生的编号与要删除的学生编号匹配
                             flag = True  # 标记为已找到并删除该学生数据
                     if flag:  # 如果已经删除了指定的学生数据
@@ -111,6 +112,7 @@ def delete():
                 continue
             else:  # 如果用户输入的不是'y'，则结束循环
                 break
+
 
 """
 
@@ -143,20 +145,48 @@ def delete():
 
 """
 
+
 def modify():
     pass
 
 
 def sort():
-    pass
+    display()
+    with open(filename, 'r', encoding='utf-8') as file:
+        # 以读模式打开数据文件，并将此动作命名为file
+        student_list = [eval(student_str.strip())
+                        for student_str in file.readlines()]  # 将每行字符串转换为字典并存储到列表中
+
+    # 为每个学生计算平均分，并将结果存储为一个元组的列表 （还没懂）
+    student_averages = [(student_dict['名字'],
+                         (student_dict['Python成绩'] + student_dict['Java成绩']) / 2)
+                        for student_dict in student_list]
+
+    # 按照平均分进行降序排序 （还没懂）
+    student_averages.sort(key=lambda x: x[1], reverse=True)
+
+    # 打印排序后的学生平均分
+    for name, average in student_averages:
+        print(f'{name}: {average}')
 
 
 def count():
-    pass
+    with open(filename, 'r', encoding='utf-8') as file:
+        # 以读模式打开数据文件，并将此动作命名为file
+        student_count = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
+        line_count = len(student_count)
+        print(f'共计有学生：{line_count}人')
 
 
 def display():
-    pass
+    with open(filename, 'r', encoding='utf-8') as file:
+        # 以读模式打开数据文件，并将此动作命名为file
+        student_display = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
+        for student_str in student_display: 
+        # 遍历student_display列表中的每一行数据，每一行数据被赋值给student_str
+            student_dict = eval(student_str.strip())  # eval()将每一行的字符串转换为字典
+            # strip()方法来移除每一行字符串的前后空格和换行符
+            print(student_dict)  
 
 
 def exit():
