@@ -14,7 +14,7 @@ def menu():
     print('      6. 统计学生总人数')
     print('      7. 显示所有学生信息')
     print('      0. 退出')
-
+#程序其实可以更简单。读取后格式化成字典可以命名个函数，每次调用就行了
 
 def insert():  # 插入数据的函数
     student_list = []  # 新建一个空列表，用于存放学生数据
@@ -52,7 +52,23 @@ def insert():  # 插入数据的函数
 
 def search():
     print('查找学生信息')
-    # print 请选择您要查找：名字、学号
+    while True:  # 开始一个无限循环
+        student_id = int(input('请输入要查找的学生的ID'))  # 录入学生ID，并转成int类型
+        if student_id != '':  # 如果输入的学生ID不为空
+            if os.path.exists(filename):  # 检查数据文件是否存在
+                with open(filename, 'r', encoding='utf-8') as file:
+                    # 以读模式打开数据文件，并将此动作命名为file
+                    student_old = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
+            else:
+                student_old = []  # 如果文件不存在，则设定student_old为一个空列表
+            flag = False  # 初始化标记位，用于标记是否成功修改数据
+            if student_old:  # 如果student_old非空，就是查找的学生数据。
+                with open(filename, 'r', encoding='utf-8') as wf:  # 以写模式打开数据文件，准备写入新的学生数据
+                    for item in student_old:  # 遍历每一个旧的学生数据 （把old的数据逐行放入item）
+                        d = dict(eval(item))  # 将字符串类型的学生数据转换成字典类型
+                        if int(d.get('学生编号')) == student_id:  # 如果该学生的编号与要修改的学生编号匹配
+                            print(item)
+                            break
 
 
 def save(lst):
@@ -147,7 +163,32 @@ def delete():
 
 
 def modify():
-    pass
+    display()
+    while True:  # 开始一个无限循环
+        student_id = int(input('请输入要修改的学生的ID'))  # 录入学生ID，并转成int类型
+        if student_id != '':  # 如果输入的学生ID不为空
+            if os.path.exists(filename):  # 检查数据文件是否存在
+                with open(filename, 'r', encoding='utf-8') as file:
+                    # 以读模式打开数据文件，并将此动作命名为file
+                    student_old = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
+            else:
+                student_old = []  # 如果文件不存在，则设定student_old为一个空列表
+            flag = False  # 初始化标记位，用于标记是否成功修改数据
+            if student_old:  # 如果student_old非空，就是有旧的学生数据。
+                with open(filename, 'w', encoding='utf-8') as wf:  # 以写模式打开数据文件，准备写入新的学生数据
+                    for item in student_old:  # 遍历每一个旧的学生数据 （把old的数据逐行放入item）
+                        d = dict(eval(item))  # 将字符串类型的学生数据转换成字典类型
+                        if int(d.get('学生编号')) == student_id:  # 如果该学生的编号与要修改的学生编号匹配
+                            new_id = int(input('请输入新的学生ID'))  # 让用户输入新的ID
+                            d['学生编号'] = new_id  # 更新学生的ID
+                            flag = True  # 标记为已找到并修改该学生数据
+                        wf.write(str(d) + '\n')  # 将数据，无论是否修改，都写入到新的数据文件中
+        if flag:  # 如果已经修改了指定的学生数据
+            # 输出修改成功的消息
+            print(f'id为{student_id}的学生信息已经修改为新的ID {new_id}')
+            break
+        else:  # 如果没有找到指定的学生数据
+            print(f'没找到{student_id},的学生')  # 输出未找到的消息
 
 
 def sort():
@@ -182,11 +223,11 @@ def display():
     with open(filename, 'r', encoding='utf-8') as file:
         # 以读模式打开数据文件，并将此动作命名为file
         student_display = file.readlines()  # 读取文件中的所有行，每一行代表一个学生的数据
-        for student_str in student_display: 
-        # 遍历student_display列表中的每一行数据，每一行数据被赋值给student_str
+        for student_str in student_display:
+            # 遍历student_display列表中的每一行数据，每一行数据被赋值给student_str
             student_dict = eval(student_str.strip())  # eval()将每一行的字符串转换为字典
             # strip()方法来移除每一行字符串的前后空格和换行符
-            print(student_dict)  
+            print(student_dict)
 
 
 def exit():
