@@ -1,17 +1,36 @@
-# def funA():
-#     x = 520
-
-#     def funB():
-#         x = 880
-#         print("In funB, x =", x)
-#     funB()
-#     print("In funA, x =", x)
-
-
-# funA()
-
-
 def funA():
+    x = 520
+
+    def funB():
+        x = 880
+        print("In funB, x =", x)
+    funB()
+    print("In funA, x =", x)
+
+
+funA()
+
+
+def outer():
+    x = 0
+    y = 0
+
+    def inner(x1, y1):
+        nonlocal x, y
+        # 修改外层作用域的变量。
+        x += x1  # x+1=x1
+        y += y1
+        print(f"x={x},y={y}")
+    return inner
+
+
+move = outer()
+move(1, 2)
+move(2, 2)
+move(1, 2)
+
+
+def funA1():
     x = 520
 
     def funB():
@@ -21,10 +40,10 @@ def funA():
         x = 881
         print("In funB, x =", x)
     funB()
-    print("In funA, x =", x)
+    print("In funA1, x =", x)
 
 
-funA()
+funA1()
 
 str = 11
 abc = 111

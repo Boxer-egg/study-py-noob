@@ -34,13 +34,13 @@ class FamilyCar(Car):  # 定义一个子类，表示家用车，继承自Car类
 
     def stop(self):
         print('目的地到了，我们去玩吧～～')
-   
+
 
 if __name__ == "__main__":
     taixi = Taxi('沃尔沃', '蒙D', '野马')  # 创建一个出租车实例
     taixi.start()  # 启动出租车
     taixi.stop()  # 停止出租车
-    print('-'*30)
+    print('-' * 30)
     family_car = FamilyCar('还是沃尔沃', '蒙D', '小王')  # 创建一个家用车实例
     family_car.start()  # 启动家用车
     family_car.stop()  # 停止家用车
