@@ -3,9 +3,9 @@ def funA():
 
     def funB():
         x = 880
-        print("In funB, x =", x)
+        print("In funB：, x =", x)
     funB()
-    print("In funA, x =", x)
+    print("In funA：, x =", x)
 
 
 funA()
@@ -25,29 +25,11 @@ def outer():
 
 
 move = outer()
-move(1, 2)
+move(1, 1)
+move(1, 1)
 move(2, 2)
-move(1, 2)
+move(2, 2)
 
-
-def funA1():
-    x = 520
-
-    def funB():
-        nonlocal x  # Python 只会劝你从良，从不阻止你犯罪
-        # 在内部修改外部函数作用域的值
-        # 为了使 nonlocal 正常工作，嵌套函数中的变量名和它想要引用的外部函数中的变量名必须一致。
-        x = 881
-        print("In funB, x =", x)
-    funB()
-    print("In funA1, x =", x)
-
-
-funA1()
-
-str = 11
-abc = 111
-print(str, abc)
 
 '''
 视频编号：BV1c4411e77
@@ -59,6 +41,22 @@ funB 是 funA 内部的一个嵌套函数。
 当我们调用 funB，它首先打印 x 的值，此时 x 的值为 881。
 在 funB 调用后，funA 打印 x 的值。由于 funB 已经修改了 x 的值，所以此时 x 的值仍然是 881。
 '''
+
+
+def funA1():
+    x = 520
+
+    def funB():
+        nonlocal x  # Python 只会劝你从良，从不阻止你犯罪
+        # 在内部修改外部函数作用域的值
+        # 为了使 nonlocal 正常工作，嵌套函数中的变量名和它想要引用的外部函数中的变量名必须一致。
+        x = 881
+        print("在 fucB 里面, x =", x)
+    funB()
+    print("在 funA1 里面, x =", x)
+
+
+funA1()
 
 
 '''
